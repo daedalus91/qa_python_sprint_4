@@ -6,10 +6,14 @@ from main import BooksCollector
 class TestBooksCollector:
 
     def test_init_collections_are_empty_and_genres_filled(self, collector):
-        assert collector.get_books_genre() == {}
-        assert collector.get_list_of_favorites_books() == []
-        assert collector.genre == ['Фантастика', 'Ужасы', 'Детективы', 'Мультфильмы', 'Комедии']
-        assert collector.genre_age_rating == ['Ужасы', 'Детективы']
+        get_empty_books_genre = collector.get_books_genre()
+        get_empty_favorites_books = collector.get_list_of_favorites_books()
+        get_empty_genre = collector.genre
+        get_empty_genre_age_rating = collector.genre_age_rating
+        assert get_empty_books_genre == {}
+        assert get_empty_favorites_books == []
+        assert get_empty_genre == ['Фантастика', 'Ужасы', 'Детективы', 'Мультфильмы', 'Комедии']
+        assert get_empty_genre_age_rating == ['Ужасы', 'Детективы']
 
     def test_add_new_book_add_two_books_added_with_empty_genre(self, collector_with_two_books):
         books_genre = collector_with_two_books.get_books_genre()
@@ -82,10 +86,12 @@ class TestBooksCollector:
         assert collector.get_book_genre('Книга') == 'Комедии'
 
     def test_get_book_genre_existing_book_returns_genre(self, collector_with_genres):
-        assert collector_with_genres.get_book_genre('Шерлок Холмс') == 'Детективы'
+        get_books_genre = collector_with_genres.get_book_genre('Шерлок Холмс')
+        assert get_books_genre == 'Детективы'
 
     def test_get_book_genre_unknown_book_returns_none(self, collector):
-        assert collector.get_book_genre('Нет такой книги') is None
+        get_book_genre = collector.get_book_genre('Нет такой книги')
+        assert get_book_genre is None
 
     def test_get_books_with_specific_genre_two_books_one_genre_returns_both(self, collector):
         collector.add_new_book('Марсианин')
@@ -98,13 +104,16 @@ class TestBooksCollector:
         assert collector.get_books_with_specific_genre('Фантастика') == ['Марсианин', 'Дюна']
 
     def test_get_books_with_specific_genre_no_books_with_genre_returns_empty_list(self, collector_with_two_books):
-        assert collector_with_two_books.get_books_with_specific_genre('Комедии') == []
+        get_books_with_specific_genre = collector_with_two_books.get_books_with_specific_genre('Комедии')
+        assert get_books_with_specific_genre == []
 
     def test_get_books_with_specific_genre_invalid_genre_returns_empty_list(self, collector_with_genres):
-        assert collector_with_genres.get_books_with_specific_genre('Роман') == []
+        get_books_with_specific_genre = collector_with_genres.get_books_with_specific_genre('Роман')
+        assert get_books_with_specific_genre == []
 
     def test_get_books_with_specific_genre_empty_collector_returns_empty_list(self, collector):
-        assert collector.get_books_with_specific_genre('Ужасы') == []
+        get_books_with_specific_genre = collector.get_books_with_specific_genre('Ужасы')
+        assert get_books_with_specific_genre == []
 
     def test_get_books_genre_returns_dict_with_books_and_genres(self, collector):
         collector.add_new_book('Марсианин')
@@ -112,12 +121,14 @@ class TestBooksCollector:
         assert collector.get_books_genre() == {'Марсианин': 'Фантастика'}
 
     def test_get_books_for_children_returns_only_books_without_age_rating(self, collector_with_genres):
-        assert collector_with_genres.get_books_for_children() == [
+        get_books_for_children = collector_with_genres.get_books_for_children()
+        assert get_books_for_children == [
             'Незнайка на Луне', 'Марсианин', 'Двенадцать стульев'
         ]
 
     def test_get_books_for_children_book_without_genre_not_in_list(self, collector_with_two_books):
-        assert collector_with_two_books.get_books_for_children() == []
+        get_books_for_children = collector_with_two_books.get_books_for_children()
+        assert get_books_for_children == []
 
     @pytest.mark.parametrize('genre', ['Ужасы', 'Детективы'])
     def test_get_books_for_children_age_rating_genre_not_in_list(self, collector, genre):
@@ -126,7 +137,8 @@ class TestBooksCollector:
         assert collector.get_books_for_children() == []
 
     def test_get_books_for_children_empty_collector_returns_empty_list(self, collector):
-        assert collector.get_books_for_children() == []
+        get_books_for_children = collector.get_books_for_children()
+        assert get_books_for_children == []
 
     def test_add_book_in_favorites_book_from_dict_added(self, collector_with_two_books):
         collector_with_two_books.add_book_in_favorites('Гордость и предубеждение и зомби')
@@ -162,9 +174,11 @@ class TestBooksCollector:
         assert 'Гордость и предубеждение и зомби' in collector_with_two_books.get_books_genre()
 
     def test_get_list_of_favorites_books_empty_by_default(self, collector):
-        assert collector.get_list_of_favorites_books() == []
+        get_list_of_favorites_books = collector.get_list_of_favorites_books()
+        assert get_list_of_favorites_books == []
 
     def test_get_list_of_favorites_books_returns_added_books(self, collector_with_genres):
         collector_with_genres.add_book_in_favorites('Марсианин')
         collector_with_genres.add_book_in_favorites('Шерлок Холмс')
         assert collector_with_genres.get_list_of_favorites_books() == ['Марсианин', 'Шерлок Холмс']
+        
